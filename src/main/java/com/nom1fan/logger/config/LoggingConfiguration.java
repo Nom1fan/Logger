@@ -1,9 +1,9 @@
 package com.nom1fan.logger.config;
 
-import com.nom1fan.logger.ConsoleAppender;
-import com.nom1fan.logger.LogAppender;
 import com.nom1fan.logger.Logger;
 import com.nom1fan.logger.SimpleLogger;
+import com.nom1fan.logger.appender.ConsoleAppender;
+import com.nom1fan.logger.appender.LogAppender;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Node;

@@ -1,5 +1,6 @@
 package com.nom1fan.logger;
 
+import com.nom1fan.logger.appender.LogAppender;
 import com.nom1fan.logger.config.LoggingConfiguration;
 import com.nom1fan.logger.config.MonitorConfiguration;
 import com.nom1fan.logger.monitor.LogMonitor;

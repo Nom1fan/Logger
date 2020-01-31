@@ -1,9 +1,9 @@
 <configuration>
     <logger name="com.nom1fan.logger">
-        <logAppender>com.nom1fan.logger.FileLogAppender</logAppender>
+        <logAppender>com.nom1fan.logger.appender.FileLogAppender</logAppender>
     </logger>
 
     <logger name="com.nom1fan">
-        <logAppender>com.nom1fan.logger.FileLogAppender</logAppender>
+        <logAppender>com.nom1fan.logger.appender.FileLogAppender</logAppender>
     </logger>
 </configuration>

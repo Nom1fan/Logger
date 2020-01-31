@@ -1,4 +1,6 @@
-package com.nom1fan.logger;
+package com.nom1fan.logger.appender;
+
+import com.nom1fan.logger.LogLevel;
 
 import java.io.BufferedWriter;
 import java.io.File;
