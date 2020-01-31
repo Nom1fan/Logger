@@ -19,9 +19,9 @@ class LoggerFactoryTest {
     // Half manual e2e test. Output should include the error alert
     @Test
     public void getExistingLogger_CorrectAppenderUsed_AsDefinedInLoggingXml() {
-        Logger nonExistingLogger = LoggerFactory.getLogger("com.nom1fan.logger");
+        Logger existingLogger = LoggerFactory.getLogger("com.nom1fan.logger");
         for (int i = 0; i < MonitorConfiguration.getLogLevelErrorThreshold(); i++) {
-            nonExistingLogger.error("error message");
+            existingLogger.error("error message");
         }
 
         //TODO Add assertion on temp file for output + console for alert
