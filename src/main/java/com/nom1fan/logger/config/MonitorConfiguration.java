@@ -17,7 +17,7 @@ public final class MonitorConfiguration {
 
     private static final String DEFAULT_MONITOR_SERVICE_ENDPOINT = "http://monitor.service.com:80";
     private static final String MONITOR_SERVICE_KEY = "monitor.service.endpoint";
-    private static final Map<LogLevel, AtomicLong> LogLevelThresholdMap = new ConcurrentHashMap<>();
+    private static final Map<LogLevel, AtomicLong> logLevelThresholdMap = new ConcurrentHashMap<>();
     private static final Properties properties;
 
     static {
@@ -25,7 +25,7 @@ public final class MonitorConfiguration {
         properties = new Properties();
         try {
             properties.load(propertiesStream);
-            LogLevelThresholdMap.put(LogLevel.ERROR, new AtomicLong(getLogLevelErrorThreshold()));
+            logLevelThresholdMap.put(LogLevel.ERROR, new AtomicLong(getLogLevelErrorThreshold()));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -52,7 +52,7 @@ public final class MonitorConfiguration {
     }
 
     public static Map<LogLevel, AtomicLong> getLevelThresholdMap() {
-        return LogLevelThresholdMap;
+        return logLevelThresholdMap;
     }
 
     private static LogMonitor getErrorLogLevelLogMonitor() {
