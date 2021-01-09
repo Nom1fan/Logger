@@ -1,29 +1,29 @@
 package com.nom1fan.logger;
 
 import com.nom1fan.logger.appender.LogAppender;
+import com.nom1fan.logger.config.LoggerConfig;
 import com.nom1fan.logger.config.LoggingConfiguration;
 import com.nom1fan.logger.config.MonitorConfiguration;
 import com.nom1fan.logger.monitor.LogMonitor;
-import org.dom4j.DocumentException;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public final class LoggerFactory {
 
-    private static final Map<String, Logger> name2LoggerMap;
+    private static final Map<String, Logger> loggerMap;
+    private static final Map<String, LoggerConfig> name2LoggerConfigMap;
     private static final LogAppender defaultLogAppender;
     private static final List<LogMonitor> logMonitors;
+    private static final LoggingQueue loggingQueue;
 
     static {
-        try {
-            name2LoggerMap = LoggingConfiguration.getLoggers();
-            defaultLogAppender = LoggingConfiguration.getDefaultAppender();
-            logMonitors = MonitorConfiguration.getLogMonitors();
-        } catch (DocumentException | ClassNotFoundException | IllegalAccessException | InstantiationException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Failed to instantiate loggers by configuration");
-        }
+        loggerMap = new HashMap<>();
+        name2LoggerConfigMap = LoggingConfiguration.getLoggersConfig();
+        defaultLogAppender = AppenderFactory.getDefaultAppender();
+        logMonitors = MonitorConfiguration.getLogMonitors();
+        loggingQueue = new LoggingQueue();
     }
 
     private LoggerFactory() {
@@ -34,13 +34,18 @@ public final class LoggerFactory {
     }
 
     public static Logger getLogger(String name) {
-        if (name2LoggerMap.containsKey(name)) {
-            return name2LoggerMap.get(name);
+
+        if (loggerMap.containsKey(name)){
+            return loggerMap.get(name);
         }
-
-        Logger log = new SimpleLogger(name, defaultLogAppender, logMonitors);
-        name2LoggerMap.put(name, log);
-
-        return log;
+        if (name2LoggerConfigMap.containsKey(name)) {
+            LogAppender logAppender = name2LoggerConfigMap.get(name).getLogAppender();
+            Logger logger = new SimpleLogger(name, logAppender, MonitorConfiguration.getLogMonitors(), loggingQueue);
+            loggerMap.put(name, logger);
+            return logger;
+        }
+        Logger logger = new SimpleLogger(name, defaultLogAppender, logMonitors, loggingQueue);
+        loggerMap.put(name, logger);
+        return logger;
     }
 }

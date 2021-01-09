@@ -42,8 +42,6 @@ public final class MonitorConfiguration {
     }
 
     public static String getMonitorServiceEndpoint() throws IOException {
-
-
         if (!properties.contains(MONITOR_SERVICE_KEY)) {
             return DEFAULT_MONITOR_SERVICE_ENDPOINT;
         }

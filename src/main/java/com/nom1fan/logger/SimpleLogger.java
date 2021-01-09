@@ -12,11 +12,13 @@ public class SimpleLogger implements Logger {
     private final LogAppender logAppender;
     private final List<LogMonitor> logMonitors;
     private final String name;
+    private final LoggingQueue loggingQueue;
 
-    public SimpleLogger(String name, LogAppender logAppender, List<LogMonitor> logMonitors) {
+    public SimpleLogger(String name, LogAppender logAppender, List<LogMonitor> logMonitors, LoggingQueue loggingQueue) {
         this.logAppender = logAppender;
         this.logMonitors = logMonitors;
         this.name = name;
+        this.loggingQueue = loggingQueue;
     }
 
     public void info(String msg) {
@@ -44,6 +46,7 @@ public class SimpleLogger implements Logger {
     }
 
     private void append(LogLevel logLevel, String msg) {
-        logAppender.append(Thread.currentThread().getName(), name, logLevel, msg);
+        String logThreadName = Thread.currentThread().getName();
+        loggingQueue.queueLog(new LogRecord(logAppender, logThreadName, name, logLevel, msg));
     }
 }

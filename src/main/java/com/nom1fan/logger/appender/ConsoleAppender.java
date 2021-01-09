@@ -1,14 +1,15 @@
 package com.nom1fan.logger.appender;
 
-import com.nom1fan.logger.LogLevel;
+import com.nom1fan.logger.LogRecord;
+
+import java.util.Date;
 
 public class ConsoleAppender implements LogAppender {
 
-    private static final String DEFAULT_PATTERN = "[%s] [%s] [%s] [%s]";
-
     @Override
-    public void append(String threadName, String name, LogLevel logLevel, String msg) {
-        String logMsg = String.format(DEFAULT_PATTERN, threadName, name, logLevel.toString(), msg);
+    public void append(LogRecord logRecord) {
+        String logMsg = String.format(DEFAULT_PATTERN, sdf.format(new Date()), logRecord.getLogThreadName(),
+                logRecord.getLoggerName(), logRecord.getLogLevel().toString(), logRecord.getMsg());
         System.out.println(logMsg);
     }
 }

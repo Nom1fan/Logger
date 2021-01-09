@@ -1,8 +1,14 @@
 package com.nom1fan.logger.appender;
 
-import com.nom1fan.logger.LogLevel;
+import com.nom1fan.logger.LogRecord;
+
+import java.text.SimpleDateFormat;
 
 public interface LogAppender {
 
-    void append(String threadName, String name, LogLevel logLevel, String msg);
+    String DEFAULT_PATTERN = "[%s] [%s] [%s] [%s] [%s]";
+
+    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+
+    void append(LogRecord logRecord);
 }

@@ -6,6 +6,7 @@ import com.nom1fan.logger.config.MonitorConfiguration;
 
 import java.beans.PropertyChangeEvent;
 import java.util.Map;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -34,7 +35,7 @@ public class LogLevelLogMonitor implements LogMonitor {
         if (logLevelThreshold == logLevelCount) {
             logLevelCountMap.put(logLevel, new AtomicLong(0));
             logAlert.setThreshold(logLevelThreshold);
-            monitorService.sendAlert(logAlert);
+            new Thread(() -> monitorService.sendAlert(logAlert)).start();
         } else {
             logLevelCountMap.put(logLevel, new AtomicLong(logLevelCount));
         }
